@@ -1,30 +1,34 @@
-// 시간 초과
 const fs = require('fs')
-// const readFileSyncAddress = '/dev/stdin'
-const readFileSyncAddress = './예제.txt'
+const readFileSyncAddress = process.platform === 'linux' ? '/dev/stdin' : './예제.txt'
 const input = fs.readFileSync(readFileSyncAddress).toString().trim().split('\n')
 const n = +input.shift()
 const arr = input.map((_arr) => _arr.split(' ')).map((el) => el.map((v) => parseInt(v)))
 
-const treeMap = new Map()
+const tree = Array.from({length: n + 1}, () => new Array())
 
-treeMap.set(1, 0) //  1번 노드에 부모가 있다고 가정
+for (let [from, to] of arr) {
+  tree[from].push(to)
+  tree[to].push(from)
+}
 
-arr.forEach(([l, r]) => {
-  if (treeMap.has(l)) {
-    treeMap.set(r, l) // {자식:부모}
-  } else {
-    treeMap.set(l, r)
+const parent = Array(n + 1).fill(0)
+
+const bfs = () => {
+  const q = [1]
+  parent[1] = 1
+
+  while (q.length) {
+    const node = q.shift()
+
+    tree[node].forEach((n) => {
+      if (!parent[n]) {
+        parent[n] = node // 부모 추가
+        q.push(n)
+      }
+    })
   }
-})
+}
 
-// treeMap(7) { 1 => 0, 6 => 1, 3 => 6, 5 => 3, 4 => 1, 2 => 4, 7 => 4 }
+bfs()
 
-const tree = [...treeMap]
-
-tree.sort((a, b) => a[0] - b[0])
-tree.forEach(([children, parent]) => {
-  if (children !== 1) {
-    console.log(parent)
-  }
-})
+console.log(parent.slice(2).join('\n'))
