@@ -9,7 +9,7 @@ function solution(land) {
       } else {
         let arr = land[i - 1].slice()
         arr[j] = 0
-        land[i][j] += Math.max.apply(null, arr) // arr 배열 내의 최솟값 찾기
+        land[i][j] += Math.max.apply(null, arr)
         answer = Math.max(land[i][j], answer)
       }
     }
