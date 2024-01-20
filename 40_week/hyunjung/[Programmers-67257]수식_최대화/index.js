@@ -2,7 +2,6 @@ function solution(expression) {
   const expressions = ['+-*', '+*-', '-*+', '-+*', '*+-', '*-+']
   let max = 0
   let tokens = expression.match(/(\d+|[-+*/])/g)
-  // 	['100', '-','200', '*', '300', '-', '500', '+', '20']
   expressions.forEach((ex) => {
     let tokens_c = tokens.slice()
     ex.split('').forEach((e) => {

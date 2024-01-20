@@ -14,9 +14,7 @@ function solution(storey) {
     } else if (last < 5) {
       count += last
     } else {
-      // 올림
       count += 10 - last
-      // 앞자리 올림
       if (s.length) {
         s.push(s.pop() + 1)
       } else {

@@ -46,10 +46,8 @@ function solution(p) {
   if (isCorrect(u)) {
     answer += u + solution(v)
   } else {
-    // 4-1 ~ 4-3
     answer += '(' + solution(v) + ')'
 
-    // 4-4
     for (let i = 1; i < u.length - 1; i++) {
       u[i] === '(' ? (answer += ')') : (answer += '(')
     }
